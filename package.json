@@ -1,0 +1,25 @@
+{
+  "name": "AmazonesqueDB",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mokryan2/AmazonesqueDB.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mokryan2/AmazonesqueDB/issues"
+  },
+  "homepage": "https://github.com/mokryan2/AmazonesqueDB#readme",
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "inquirer": "^6.1.0",
+    "mysql": "^2.16.0"
+  }
+}
