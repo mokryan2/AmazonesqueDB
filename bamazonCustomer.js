@@ -70,6 +70,15 @@ function searchItems() {
                 if (purchase.quantity <= res[0].stock_quantity) {
                     var remainder = res[0].stock_quantity - purchase.quantity;
                     var purchaseTotal = purchase.quantity * res[0].price;
+                    console.log("============================");
+                    console.log("You want to purchase " + purchase.quantity + " of:");
+                    console.log("============================");
+                    console.log(
+                        "Item Number: " + res[0].id +
+                        "\nProduct Name: " + res[0].product_name +
+                        "\nDepartment: " + res[0].department_name +
+                        "\nPrice: $" + res[0].price)
+                    console.log("============================");
                     inquirer.prompt([
                         {
                             type: "list",
@@ -78,7 +87,7 @@ function searchItems() {
                             choices: ["Yes", "No"]
                         }
                     ]).then(function (complete) {
-                        // Updates inventory //
+                        // Updates inventory if yes //
                         if (complete.confirmPurchase === "Yes") {
                             console.log("=============================================");
                             console.log("Your purchase of " + res[0].product_name + " is on the way!");
@@ -106,10 +115,10 @@ function searchItems() {
                                 })
                             })
                         }
-                        // Start over //
+                        // Start over if no //
                         if (complete.confirmPurchase === "No"){
                             console.log("=============================================");
-                            console.log("Thank you for shopping with us");
+                            console.log("Thank you for shopping with us!");
                             console.log("=============================================");
                             inquirer.prompt([
                                 {
