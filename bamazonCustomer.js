@@ -15,5 +15,24 @@ var connection = mysql.createConnection({
 
 connection.connect((err) => {
     if (err) throw err;
-    console.log(`connected as id ${connection.threadId}`)
+    console.log(`Connected as ID ${connection.threadId}`)
 });
+
+function displayItems() {
+    console.log("Pulling up item list...\n");
+    connection.query("SELECT * FROM products", (err, res) => {
+        if (err) throw err;
+        for (var i in res) {
+            console.log("============================");
+            console.log(
+                "Item Number: " + res[i].id +
+                "\nProduct Name: " + res[i].product_name +
+                "\nDepartment: " + res[i].department_name +
+                "\nPrice: $" + res[i].price +
+                "\nStock Left: " + res[i].stock_quantity);
+            console.log("============================");
+
+        };
+    })
+}
+displayItems();
