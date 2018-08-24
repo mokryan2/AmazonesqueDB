@@ -132,6 +132,12 @@ function searchItems() {
                         }
                     })
                 }
+                else{
+                    console.log("=============================================");
+                    console.log("That item is not in stock! Please try again!")
+                    console.log("=============================================");
+                    searchItems();
+                }
             })
         })
     })
