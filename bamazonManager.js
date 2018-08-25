@@ -60,7 +60,7 @@ function managerCommand() {
                             "\nProduct Name: " + res[i].product_name +
                             "\nDepartment: " + res[i].department_name +
                             "\nStock Left: " + res[i].stock_quantity +
-                            "\nThis item is running low on supplies!"+
+                            "\nThis item is running low on supplies!" +
                             "\nPlease refill stock!");
                         console.log("============================");
                     }
@@ -74,7 +74,28 @@ function managerCommand() {
             })
         }
         if (action.choice === "Add to Inventory") {
-
+            inquirer.prompt([
+                {
+                    name: "listItem",
+                    message: "Which ID would you like to order more of?"
+                },
+                {
+                    name: "supplyItem",
+                    message: "How much would you like to add?"
+                }
+            ]).then(function (addInventory) {
+                connection.query("SELECT * FROM products WHERE id =" + "'" + addInventory.listItem + "'", function (err, res) {
+                    var addToQuantity = parseInt(res[0].stock_quantity) + parseInt(addInventory.supplyItem);
+                    connection.query("UPDATE products SET stock_quantity = " + addToQuantity + " WHERE id = " + addInventory.listItem + ";", function (err, stockRes) {
+                        console.log("=====================================================");
+                        console.log(
+                            "Product #" + res[0].id + " has been restocked!" +
+                            "\nPlease check your new stock!")
+                        console.log("=====================================================");
+                        managerCommand();
+                    })
+                })
+            })
         }
     })
 }
