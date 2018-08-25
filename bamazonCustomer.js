@@ -44,29 +44,30 @@ function searchItems() {
         {
             name: "choice",
             message: "Which ID # would you like to buy?",
-            validate: function (val) {
+            validate:(val) => {
                 if (isNaN(val) === false) {
                     return true;
                 }
                 return false;
             }
         }
-    ]).then(function (answers) {
+    ]).then((answers) => {
         // Asks how many you want to buy //
         inquirer.prompt([
             {
                 name: "quantity",
                 message: "How many would you like to buy?",
-                validate: function (val) {
+                validate: (val) => {
                     if (isNaN(val) === false) {
                         return true;
                     }
                     return false;
                 }
             }
-        ]).then(function (purchase) {
+        ]).then((purchase) => {
             // Looks at chosen item //
-            connection.query("SELECT * FROM products WHERE id=" + "'" + answers.choice + "'", function (err, res) {
+            connection.query("SELECT * FROM products WHERE id=" + "'" + answers.choice + "'", (err, res) => {
+                if (err) throw err;
                 if (purchase.quantity <= res[0].stock_quantity) {
                     var remainder = res[0].stock_quantity - purchase.quantity;
                     var purchaseTotal = purchase.quantity * res[0].price;
@@ -86,13 +87,14 @@ function searchItems() {
                             message: "Current sale is $" + purchaseTotal + ", is this right?",
                             choices: ["Yes", "No"]
                         }
-                    ]).then(function (complete) {
+                    ]).then((complete) => {
                         // Updates inventory if yes //
                         if (complete.confirmPurchase === "Yes") {
                             console.log("=============================================");
                             console.log("Your purchase of " + res[0].product_name + " is on the way!");
                             console.log("=============================================");
-                            connection.query("UPDATE products SET stock_quantity =" + remainder + " WHERE id=" + answers.choice + ";", function (err, res) {
+                            connection.query("UPDATE products SET stock_quantity =" + remainder + " WHERE id=" + answers.choice + ";",(err, res) => {
+                                if (err) throw err;
                                 inquirer.prompt([
                                     {
                                         type: "list",
@@ -101,7 +103,7 @@ function searchItems() {
                                         choices: ["Yes", "No"]
                                     }
                                     // Lets you buy more //
-                                ]).then(function(extraPurchase){
+                                ]).then((extraPurchase) => {
                                     if(extraPurchase.buyMore === "Yes"){
                                         displayItems();
                                     }
@@ -127,7 +129,7 @@ function searchItems() {
                                     message: "Do you want to buy something else?",
                                     choices: ["Yes", "No"]
                                 }
-                            ]).then(function(extraPurchase){
+                            ]).then((extraPurchase) => {
                                 if(extraPurchase.buyMore === "Yes"){
                                     displayItems();
                                 }
